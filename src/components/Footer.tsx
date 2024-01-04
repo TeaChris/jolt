@@ -14,9 +14,7 @@ export function Footer() {
         <div className="border-t border-gray-200">
           {pathsToMinimize.includes(pathname) ? null : (
             <div className="pb-8 pt-16">
-              <div className="text-lg font-extrabold text-primary-foreground">
-                Jolt
-              </div>
+              <div className="text-2xl font-extrabold text-primary">jolt.</div>
             </div>
           )}
 

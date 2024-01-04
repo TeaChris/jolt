@@ -12,13 +12,13 @@ export default function Home() {
           </h1>
           <p className="mt-6 text-lg max-w-prose text-muted-foreground">
             Discover a world of style and convenience at{' '}
-            <span className="text-primary font-bold">JOLT,</span> where curated
+            <span className="text-primary font-bold">jolt.</span> where curated
             collections meet seamless shopping for an unparalleled online
             shopping experience.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
-            <Link href="/products" className={buttonVariants()}>
+            <Link href="/shop" className={buttonVariants()}>
               Browse Trending
             </Link>
             <Button variant="ghost">Our quality promise &rarr;</Button>
