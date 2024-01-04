@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { Button, buttonVariants } from './ui/button'
+import { Cart } from './Cart'
 
 const navs = [
   {
@@ -92,7 +93,9 @@ export function Navbar() {
                     </div>
                   )}
 
-                  <div className="ml-4 flow-root lg:ml-6">Cart</div>
+                  <div className="ml-4 flow-root lg:ml-6">
+                    <Cart />
+                  </div>
                 </div>
               </div>
             </div>
