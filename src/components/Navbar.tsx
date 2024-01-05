@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import MaxWidthWrapper from './MaxWidthWrapper'
-import { Button, buttonVariants } from './ui/button'
+import { buttonVariants } from './ui/button'
 import { Cart } from './Cart'
+import { cookies } from 'next/headers'
+import { getServerSideUser } from '@/lib/payload-utils'
+import UserAccountNav from './UserAccountNav'
 
 const navs = [
   {
@@ -14,8 +17,9 @@ const navs = [
   },
 ]
 
-export function Navbar() {
-  const user = false
+export async function Navbar() {
+  const nextCookies = cookies()
+  const { user } = await getServerSideUser(nextCookies)
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -66,8 +70,7 @@ export function Navbar() {
 
                   {user ? (
                     <>
-                      {/* <UserAccountNav user={user} /> */}
-                      <div>later</div>
+                      <UserAccountNav user={user} />
                     </>
                   ) : (
                     <Link
