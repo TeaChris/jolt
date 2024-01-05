@@ -1,5 +1,4 @@
 import { buildConfig } from 'payload/config'
-// @ts-ignore
 import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { slateEditor } from '@payloadcms/richtext-slate'

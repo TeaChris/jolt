@@ -42,9 +42,15 @@ export default function Page() {
 
       toast.error(`Something went wrong. Please try again.`)
     },
+
+    onSuccess: ({ sentToEmail }) => {
+      toast.success(`Verification email sent to ${sentToEmail}.`)
+      router.push('/verify-email?to=' + sentToEmail)
+    },
   })
 
   const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
+    // send data to the server
     mutate({ email, password })
   }
 
