@@ -23,6 +23,7 @@ export const authRouter = router({
 
       if (users.length !== 0) throw new TRPCError({ code: 'CONFLICT' })
 
+      // create new user if user doesn't exist
       await payload.create({
         collection: 'users',
         data: {
@@ -56,8 +57,7 @@ export const authRouter = router({
       return { success: true }
     }),
 
-
-    // sign in api endpoint
+  // sign in api endpoint
   signIn: publicProcedure
     .input(AuthCredentialsValidator)
     .mutation(async ({ input, ctx }) => {
