@@ -1,7 +1,6 @@
-import { create } from 'domain'
 import { Access, CollectionConfig } from 'payload/types'
 
-const yourOwn: Access = ({ req: { user } }) => {
+const own: Access = ({ req: { user } }) => {
   if (user.role === 'admin') return true
 
   return {
@@ -15,10 +14,10 @@ export const Orders: CollectionConfig = {
   slug: 'orders',
   admin: {
     useAsTitle: 'Your Orders',
-    description: 'A summary of all your orders on DigitalHippo.',
+    description: 'A summary of all your orders on jolt.',
   },
   access: {
-    read: yourOwn,
+    read: own,
     update: ({ req }) => req.user.role === 'admin',
     delete: ({ req }) => req.user.role === 'admin',
     create: ({ req }) => req.user.role === 'admin',
