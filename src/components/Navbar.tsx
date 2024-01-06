@@ -5,6 +5,7 @@ import { Cart } from './Cart'
 import { cookies } from 'next/headers'
 import { getServerSideUser } from '@/lib/payload-utils'
 import UserAccountNav from './UserAccountNav'
+import MobileNav from './MobileNav'
 
 const navs = [
   {
@@ -28,7 +29,7 @@ export async function Navbar() {
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
               {/* TODO: ADD MOBILE NAV */}
-
+              <MobileNav />
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/" className="text-2xl font-extrabold text-primary">
                   jolt.
