@@ -40,6 +40,31 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: 'approvedForSale',
+      label: 'Product status',
+      type: 'select',
+      defaultValue: 'pending',
+      access: {
+        create: ({ req }) => req.user.role === 'admin',
+        read: ({ req }) => req.user.role === 'admin',
+        update: ({ req }) => req.user.role === 'admin',
+      },
+      options: [
+        {
+          label: 'Pending verification',
+          value: 'pending',
+        },
+        {
+          label: 'Approved',
+          value: 'approved',
+        },
+        {
+          label: 'Denied',
+          value: 'denied',
+        },
+      ],
+    },
+    {
       name: 'priceId',
       access: {
         create: () => false,
