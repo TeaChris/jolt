@@ -1,43 +1,73 @@
 export const PRODUCT_CATEGORIES = [
   {
-    label: 'UI Kits',
-    value: 'ui_kits' as const,
+    label: 'Foot Wears',
+    value: 'foot_wears' as const,
     featured: [
       {
         name: 'Editor picks',
-        href: `/products?category=ui_kits`,
-        imageSrc: '/nav/ui-kits/mixed.jpg',
+        href: `/products?category=foot_wears`,
       },
       {
         name: 'New Arrivals',
-        href: '/products?category=ui_kits&sort=desc',
-        imageSrc: '/nav/ui-kits/blue.jpg',
+        href: '/products?category=foot_wears&sort=desc',
       },
       {
         name: 'Bestsellers',
-        href: '/products?category=ui_kits',
-        imageSrc: '/nav/ui-kits/purple.jpg',
+        href: '/products?category=foot_wears',
       },
     ],
   },
   {
-    label: 'Icons',
-    value: 'icons' as const,
+    label: 'Hoodie',
+    value: 'hoodie' as const,
     featured: [
       {
-        name: 'Favorite Icon Picks',
-        href: `/products?category=icons`,
-        imageSrc: '/nav/icons/picks.jpg',
+        name: 'Favorite Hoodie Picks',
+        href: `/products?category=hoodie`,
       },
       {
         name: 'New Arrivals',
-        href: '/products?category=icons&sort=desc',
-        imageSrc: '/nav/icons/new.jpg',
+        href: '/products?category=hoodie&sort=desc',
       },
       {
-        name: 'Bestselling Icons',
-        href: '/products?category=icons',
-        imageSrc: '/nav/icons/bestsellers.jpg',
+        name: 'Bestselling Hoodie',
+        href: '/products?category=hoodie',
+      },
+    ],
+  },
+  {
+    label: 'Trousers',
+    value: 'trousers' as const,
+    featured: [
+      {
+        name: 'Favorite Trousers Picks',
+        href: `/products?category=hoodie`,
+      },
+      {
+        name: 'New Arrivals',
+        href: '/products?category=Trousers&sort=desc',
+      },
+      {
+        name: 'Bestselling Trousers',
+        href: '/products?category=Trousers',
+      },
+    ],
+  },
+  {
+    label: 'Pants',
+    value: 'pants' as const,
+    featured: [
+      {
+        name: 'Favorite Pants Picks',
+        href: `/products?category=hoodie`,
+      },
+      {
+        name: 'New Arrivals',
+        href: '/products?category=pants&sort=desc',
+      },
+      {
+        name: 'Bestselling pants',
+        href: '/products?category=pants',
       },
     ],
   },
