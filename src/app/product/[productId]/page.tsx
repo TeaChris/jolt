@@ -95,11 +95,15 @@ export default async function Page({ params }: PageProps) {
                 <div className="ml-4 border-l text-muted-foreground border-gray-300 pl-4">
                   {label}
                 </div>
+
+                <div className="ml-4 border-l font-medium text-gray-900 border-gray-300 pl-4">
+                  {`Size ${product.size}`}
+                </div>
               </div>
 
               <div className="mt-4 space-y-6">
                 <p className="text-base text-muted-foreground">
-                  {/* {product.description} */}
+                  {product.description}
                 </p>
               </div>
 

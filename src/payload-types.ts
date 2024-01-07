@@ -37,8 +37,11 @@ export interface Product {
   id: string;
   user?: (string | null) | User;
   name: string;
+  description?: string | null;
   price: number;
-  category: 'ui_kits' | 'icons';
+  size: number;
+  category: 'foot_wears' | 'hoodie' | 'trousers' | 'pants';
+  approvedForSale?: ('pending' | 'approved' | 'denied') | null;
   priceId?: string | null;
   stripeId?: string | null;
   images: {

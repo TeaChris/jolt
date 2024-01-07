@@ -52,10 +52,6 @@ export function ProductReel(props: ProductReelProps) {
           {subtitle ? (
             <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
           ) : null}
-
-          {subtitle ? (
-            <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
-          ) : null}
         </div>
 
         {href ? (
