@@ -25,11 +25,24 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: 'description',
+      type: 'textarea',
+      label: 'Product details',
+    },
+    {
       name: 'price',
       label: 'Price in USD',
       min: 0,
       max: 1000,
       type: 'number',
+      required: true,
+    },
+    {
+      name: 'size',
+      label: 'Size',
+      type: 'number',
+      min: 12,
+      max: 50,
       required: true,
     },
     {
