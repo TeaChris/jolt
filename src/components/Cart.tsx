@@ -9,23 +9,32 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet'
+import { Separator } from './ui/separator'
+import { formatPrice } from '@/lib/format-price'
 import Link from 'next/link'
 import { buttonVariants } from './ui/button'
 import Image from 'next/image'
-import { Separator } from './ui/separator'
+import { useCart } from '@/hooks/use-cart'
 import { ScrollArea } from './ui/scroll-area'
-
+import { CartItem } from './CartItem'
 import { useEffect, useState } from 'react'
-import { formatPrice } from '@/lib/format-price'
 
 export function Cart() {
+  const { items } = useCart()
+  const itemCount = items.length
+
   const [isMounted, setIsMounted] = useState<boolean>(false)
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
-  const itemCount = 0
+  const cartTotal = items.reduce(
+    (total, { product }) => total + product.price,
+    0
+  )
+
+  const fee = 1
 
   return (
     <Sheet>
@@ -35,23 +44,21 @@ export function Cart() {
           className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
         />
         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-          {/* {isMounted ? itemCount : 0} */}0
+          {isMounted ? itemCount : 0}
         </span>
       </SheetTrigger>
-
       <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
         <SheetHeader className="space-y-2.5 pr-6">
-          <SheetTitle>Cart(0)</SheetTitle>
+          <SheetTitle>Cart ({itemCount})</SheetTitle>
         </SheetHeader>
         {itemCount > 0 ? (
           <>
             <div className="flex w-full flex-col pr-6">
               <ScrollArea>
-                {/* {items.map(({ product }) => (
+                {items.map(({ product }) => (
                   <CartItem product={product} key={product.id} />
-                ))} */}
+                ))}
               </ScrollArea>
-              cart items
             </div>
             <div className="space-y-4 pr-6">
               <Separator />
@@ -62,11 +69,11 @@ export function Cart() {
                 </div>
                 <div className="flex">
                   <span className="flex-1">Transaction Fee</span>
-                  <span>{formatPrice(1)}</span>
+                  <span>{formatPrice(fee)}</span>
                 </div>
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>{formatPrice(1)}</span>
+                  <span>{formatPrice(cartTotal + fee)}</span>
                 </div>
               </div>
 
@@ -90,7 +97,7 @@ export function Cart() {
               aria-hidden="true"
               className="relative mb-4 h-60 w-60 text-muted-foreground"
             >
-              <Image src="/cart.png" fill alt="empty shopping cart hippo" />
+              <Image src="/cart.png" fill alt="empty shopping cart image" />
             </div>
             <div className="text-xl font-semibold">Your cart is empty</div>
             <SheetTrigger asChild>
