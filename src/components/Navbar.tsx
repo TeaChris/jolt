@@ -9,10 +9,6 @@ import MobileNav from './MobileNav'
 
 const navs = [
   {
-    label: 'Collection',
-    href: '/',
-  },
-  {
     label: 'Shop',
     href: '/shop',
   },
