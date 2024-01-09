@@ -5,18 +5,40 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/hooks/use-cart'
 import Image from 'next/image'
-import { Check, X } from 'lucide-react'
+import { Check, Loader2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/lib/format-price'
 import Link from 'next/link'
 import { PRODUCT_CATEGORIES } from '@/config'
+import { useRouter } from 'next/navigation'
+import { trpc } from '@/trpc/client'
 
 export default function Cart() {
   const { items, removeItem } = useCart()
+
+  const router = useRouter()
+
+  const { mutate: createCheckoutSession, isLoading } =
+    trpc.payment.createSession.useMutation({
+      onSuccess: ({ url }) => {
+        if (url) router.push(url)
+      },
+    })
+
+  const productIds = items.map(({ product }) => product.id)
+
   const [isMounted, setIsMounted] = useState<boolean>(false)
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  const cartTotal = items.reduce(
+    (total, { product }) => total + product.price,
+    0
+  )
+
+  const fee = 1
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -131,6 +153,63 @@ export default function Cart() {
                 })}
             </ul>
           </div>
+
+          <section className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
+            <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
+
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-600">Subtotal</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {isMounted ? (
+                    formatPrice(cartTotal)
+                  ) : (
+                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                  )}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <span>Flat Transaction Fee</span>
+                </div>
+                <div className="text-sm font-medium text-gray-900">
+                  {isMounted ? (
+                    formatPrice(fee)
+                  ) : (
+                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+                <div className="text-base font-medium text-gray-900">
+                  Order Total
+                </div>
+                <div className="text-base font-medium text-gray-900">
+                  {isMounted ? (
+                    formatPrice(cartTotal + fee)
+                  ) : (
+                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <Button
+                disabled={items.length === 0 || isLoading}
+                onClick={() => createCheckoutSession({ productIds })}
+                className="w-full"
+                size="lg"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
+                ) : null}
+                Checkout
+              </Button>
+            </div>
+          </section>
         </div>
       </div>
     </div>
