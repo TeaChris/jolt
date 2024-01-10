@@ -1,11 +1,11 @@
 import express from 'express'
 import { stripe } from './lib/stripe'
 import type Stripe from 'stripe'
-import {Resend} from 'resend'
+import { Resend } from 'resend'
 import { getPayloadClient } from './get-payload'
 import { Product } from './payload-types'
-import { ReceiptEmailHtml } from './components/emails/ReceiptEmail'
 import { webhookRequest } from './server'
+import { ReceiptEmailHtml } from './components/email/ReceiptEmail'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -28,24 +28,14 @@ export const stripeWebhookHandler = async (
     return res
       .status(400)
       .send(
-        `Webhook Error: ${
-          err instanceof Error
-            ? err.message
-            : 'Unknown Error'
-        }`
+        `Webhook Error: ${err instanceof Error ? err.message : 'Unknown Error'}`
       )
   }
 
-  const session = event.data
-    .object as Stripe.Checkout.Session
+  const session = event.data.object as Stripe.Checkout.Session
 
-  if (
-    !session?.metadata?.userId ||
-    !session?.metadata?.orderId
-  ) {
-    return res
-      .status(400)
-      .send(`Webhook Error: No user present in metadata`)
+  if (!session?.metadata?.userId || !session?.metadata?.orderId) {
+    return res.status(400).send(`Webhook Error: No user present in metadata`)
   }
 
   if (event.type === 'checkout.session.completed') {
@@ -62,10 +52,7 @@ export const stripeWebhookHandler = async (
 
     const [user] = users
 
-    if (!user)
-      return res
-        .status(404)
-        .json({ error: 'No such user exists.' })
+    if (!user) return res.status(404).json({ error: 'No such user exists.' })
 
     const { docs: orders } = await payload.find({
       collection: 'orders',
@@ -79,10 +66,7 @@ export const stripeWebhookHandler = async (
 
     const [order] = orders
 
-    if (!user)
-      return res
-        .status(404)
-        .json({ error: 'No such order exists.' })
+    if (!user) return res.status(404).json({ error: 'No such order exists.' })
 
     await payload.update({
       collection: 'orders',
@@ -101,8 +85,7 @@ export const stripeWebhookHandler = async (
       const data = await resend.emails.send({
         from: 'DigitalHippo <hello@joshtriedcoding.com>',
         to: [user.email],
-        subject:
-          'Thanks for your order! This is your receipt.',
+        subject: 'Thanks for your order! This is your receipt.',
         html: ReceiptEmailHtml({
           date: new Date(),
           email: user.email,
