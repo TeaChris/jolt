@@ -16,17 +16,17 @@ export default buildConfig({
     admin: '/sell',
   },
   admin: {
-    // user: 'users',
+    user: 'users',
     bundler: webpackBundler(),
-    // meta: {
-    //   titleSuffix: '- DigitalHippo',
-    //   favicon: '/favicon.ico',
-    //   ogImage: '/thumbnail.jpg',
-    // },
+    meta: {
+      titleSuffix: '- Jolt',
+      favicon: '/favicon.ico',
+      ogImage: '/thumbnail.jpg',
+    },
   },
-  //   rateLimit: {
-  //     max: 2000,
-  //   },
+  rateLimit: {
+    max: 2000,
+  },
   editor: slateEditor({}),
   db: mongooseAdapter({
     url: process.env.MONGODB_URL!,
