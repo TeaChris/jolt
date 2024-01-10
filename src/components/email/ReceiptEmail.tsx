@@ -1,4 +1,4 @@
-import { formatPrice } from '../../lib/utils'
+import { formatPrice } from '../../lib/format-price'
 import { Product } from '../../payload-types'
 
 import {
@@ -34,8 +34,7 @@ export const ReceiptEmail = ({
   orderId,
   products,
 }: ReceiptEmailProps) => {
-  const total =
-    products.reduce((acc, curr) => acc + curr.price, 0) + 1
+  const total = products.reduce((acc, curr) => acc + curr.price, 0) + 1
 
   return (
     <Html>
@@ -47,48 +46,44 @@ export const ReceiptEmail = ({
           <Section>
             <Column>
               <Img
-                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/hippo-email-sent.png`}
-                width='100'
-                height='100'
-                alt='DigitalHippo'
+                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/email.png`}
+                width="100"
+                height="100"
+                alt="jolt"
               />
             </Column>
 
-            <Column align='right' style={tableCell}>
+            <Column align="right" style={tableCell}>
               <Text style={heading}>Receipt</Text>
             </Column>
           </Section>
           <Section style={informationTable}>
             <Row style={informationTableRow}>
               <Column style={informationTableColumn}>
-                <Text style={informationTableLabel}>
-                  EMAIL
-                </Text>
+                <Text style={informationTableLabel}>EMAIL</Text>
                 <Link
                   style={{
                     ...informationTableValue,
-                  }}>
+                  }}
+                >
                   {email}
                 </Link>
               </Column>
 
               <Column style={informationTableColumn}>
-                <Text style={informationTableLabel}>
-                  INVOICE DATE
-                </Text>
+                <Text style={informationTableLabel}>INVOICE DATE</Text>
                 <Text style={informationTableValue}>
                   {format(date, 'dd MMM yyyy')}
                 </Text>
               </Column>
 
               <Column style={informationTableColumn}>
-                <Text style={informationTableLabel}>
-                  ORDER ID
-                </Text>
+                <Text style={informationTableLabel}>ORDER ID</Text>
                 <Link
                   style={{
                     ...informationTableValue,
-                  }}>
+                  }}
+                >
                   {orderId}
                 </Link>
               </Column>
@@ -103,44 +98,35 @@ export const ReceiptEmail = ({
             return (
               <Section key={product.id}>
                 <Column style={{ width: '64px' }}>
-                  {typeof image !== 'string' &&
-                  image.url ? (
+                  {typeof image !== 'string' && image.url ? (
                     <Img
                       src={image.url}
-                      width='64'
-                      height='64'
-                      alt='Product Image'
+                      width="64"
+                      height="64"
+                      alt="Product Image"
                       style={productIcon}
                     />
                   ) : null}
                 </Column>
                 <Column style={{ paddingLeft: '22px' }}>
-                  <Text style={productTitle}>
-                    {product.name}
-                  </Text>
+                  <Text style={productTitle}>{product.name}</Text>
                   {product.description ? (
                     <Text style={productDescription}>
                       {product.description.length > 50
-                        ? product.description?.slice(
-                            0,
-                            50
-                          ) + '...'
+                        ? product.description?.slice(0, 50) + '...'
                         : product.description}
                     </Text>
                   ) : null}
                   <Link
                     href={`${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${orderId}`}
-                    style={productLink}>
+                    style={productLink}
+                  >
                     Download Asset
                   </Link>
                 </Column>
 
-                <Column
-                  style={productPriceWrapper}
-                  align='right'>
-                  <Text style={productPrice}>
-                    {formatPrice(product.price)}
-                  </Text>
+                <Column style={productPriceWrapper} align="right">
+                  <Text style={productPrice}>{formatPrice(product.price)}</Text>
                 </Column>
               </Section>
             )
@@ -152,44 +138,36 @@ export const ReceiptEmail = ({
               style={{
                 paddingLeft: '40px',
                 paddingTop: 20,
-              }}>
-              <Text style={productTitle}>
-                Transaction Fee
-              </Text>
+              }}
+            >
+              <Text style={productTitle}>Transaction Fee</Text>
             </Column>
 
-            <Column
-              style={productPriceWrapper}
-              align='right'>
-              <Text style={productPrice}>
-                {formatPrice(1)}
-              </Text>
+            <Column style={productPriceWrapper} align="right">
+              <Text style={productPrice}>{formatPrice(1)}</Text>
             </Column>
           </Section>
 
           <Hr style={productPriceLine} />
-          <Section align='right'>
-            <Column style={tableCell} align='right'>
+          <Section align="right">
+            <Column style={tableCell} align="right">
               <Text style={productPriceTotal}>TOTAL</Text>
             </Column>
-            <Column
-              style={productPriceVerticalLine}></Column>
+            <Column style={productPriceVerticalLine}></Column>
             <Column style={productPriceLargeWrapper}>
-              <Text style={productPriceLarge}>
-                {formatPrice(total)}
-              </Text>
+              <Text style={productPriceLarge}>{formatPrice(total)}</Text>
             </Column>
           </Section>
           <Hr style={productPriceLineBottom} />
 
           <Text style={footerLinksWrapper}>
-            <Link href='#'>Account Settings</Link> •{' '}
-            <Link href='#'>Terms of Sale</Link> •{' '}
-            <Link href='#'>Privacy Policy </Link>
+            <Link href="#">Account Settings</Link> •{' '}
+            <Link href="#">Terms of Sale</Link> •{' '}
+            <Link href="#">Privacy Policy </Link>
           </Text>
           <Text style={footerCopyright}>
             Copyright © 2023 DigitalHippo Inc. <br />{' '}
-            <Link href='#'>All rights reserved</Link>
+            <Link href="#">All rights reserved</Link>
           </Text>
         </Container>
       </Body>
@@ -197,9 +175,7 @@ export const ReceiptEmail = ({
   )
 }
 
-export const ReceiptEmailHtml = (
-  props: ReceiptEmailProps
-) =>
+export const ReceiptEmailHtml = (props: ReceiptEmailProps) =>
   render(<ReceiptEmail {...props} />, {
     pretty: true,
   })
